@@ -12,8 +12,8 @@ class Driftminer < Formula
     site_packages = prefix/"lib/python3.12/site-packages"
     site_packages.mkpath
 
-    ENV["PYTHONPATH"] = site_packages
-    system python, "setup.py", "install", "--prefix=#{prefix}"
+    ENV["PYTHONPATH"] = "#{buildpath}:#{site_packages}"
+    system python, "-m", "pip", "install", "-e", ".", "--prefix=#{prefix}"
 
     bin.install_symlink Dir["#{prefix}/bin/*"]
   end
