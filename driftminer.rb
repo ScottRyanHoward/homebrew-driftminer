@@ -15,11 +15,9 @@ class Driftminer < Formula
     ENV["PYTHONPATH"] = "#{buildpath}:#{site_packages}"
     ENV["PIP_VERBOSE"] = "1"
     
-    # Ensure setup.py exists
-    unless File.exist?("setup.py")
-      raise "setup.py not found in #{buildpath}"
-    end
-
+    # Install build dependencies
+    system python, "-m", "pip", "install", "build"
+    
     # Install in development mode with pip
     system python, "-m", "pip", "install", "-v", "-e", ".", "--prefix=#{prefix}"
 
