@@ -7,22 +7,12 @@ class Driftminer < Formula
 
   depends_on "python@3.12"
 
-  resource "virtualenv" do
-    url "https://files.pythonhosted.org/packages/0b/84/f44ceb8d98d7c5a14b9cfe7069f9d30dcbee2b7b8ea2eebd3430c573a1b8/virtualenv-20.24.7.tar.gz"
-    sha256 "69050ffb42419c91f6c1284a7b24e0475d793447e35929b488bf6a0aade39353"
-  end
-
   def install
     python = Formula["python@3.12"].opt_bin/"python3"
     venv = libexec
 
-    # Install virtualenv
-    resource("virtualenv").stage do
-      system python, "-m", "pip", "install", ".", "--target=#{libexec}"
-    end
-
     # Create virtualenv
-    ENV.prepend_path "PYTHONPATH", libexec
+    system python, "-m", "pip", "install", "virtualenv"
     system python, "-m", "virtualenv", "#{venv}"
     venv_python = venv/"bin/python"
 
