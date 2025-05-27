@@ -9,7 +9,7 @@ class Driftminer < Formula
   depends_on "python@3.12"
 
   def install
-    virtualenv_install_with_resources
+    pip_install_and_link buildpath
   end
 
   test do
