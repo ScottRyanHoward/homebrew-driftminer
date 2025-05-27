@@ -3,8 +3,8 @@ class Driftminer < Formula
 
   desc "Drift Detection as Code - Define custom infrastructure drift detection rules"
   homepage "https://github.com/ScottRyanHoward/driftminer"
-  url "https://github.com/ScottRyanHoward/driftminer/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+  url "https://github.com/ScottRyanHoward/driftminer/archive/refs/tags/v0.1.1.tar.gz"
+  sha256 "9d430e63390bc1091f7f1051953a1fa1b53e520a0e61873b8957eb9521f503ef"
   license "MIT"
 
   depends_on "python@3.12"
