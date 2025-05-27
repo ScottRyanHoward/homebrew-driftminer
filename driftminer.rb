@@ -1,5 +1,4 @@
 class Driftminer < Formula
-  include Language::Python::Virtualenv
   desc "Drift Detection as Code - Define custom infrastructure drift detection rules"
   homepage "https://github.com/ScottRyanHoward/driftminer"
   url "https://github.com/ScottRyanHoward/driftminer/archive/refs/tags/v0.1.2.tar.gz"
@@ -9,10 +8,15 @@ class Driftminer < Formula
   depends_on "python@3.12"
 
   def install
-    ENV.prepend_create_path "PYTHONPATH", libexec/"lib/python3.12/site-packages"
-    system Formula["python@3.12"].opt_bin/"python3", "-m", "pip", "install", "-v", ".", "--no-deps", "--ignore-installed", "--prefix=#{libexec}"
-    bin.install Dir[libexec/"bin/*"]
-    bin.env_script_all_files(libexec/"bin", PYTHONPATH: ENV["PYTHONPATH"])
+    venv = libexec/"venv"
+    ENV["VIRTUAL_ENV"] = venv
+    ENV.delete "PYTHONPATH"
+
+    system Formula["python@3.12"].bin/"python3", "-m", "venv", venv
+    ENV["PATH"] = "#{venv}/bin:#{ENV["PATH"]}"
+
+    system "#{venv}/bin/pip", "install", "."
+    system "#{venv}/bin/pip", "freeze", ">", "requirements.txt"
   end
 
   test do
