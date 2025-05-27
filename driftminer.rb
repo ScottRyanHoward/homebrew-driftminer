@@ -9,7 +9,8 @@ class Driftminer < Formula
   depends_on "python@3.12"
 
   def install
-    pip_install_and_link buildpath
+    system_command Formula["python@3.12"].bin/"pip3",
+      args: ["install", "--prefix=#{prefix}", "--no-deps", buildpath]
   end
 
   test do
