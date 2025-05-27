@@ -9,10 +9,7 @@ class Driftminer < Formula
   depends_on "python@3.12"
 
   def install
-    python3 = Formula["python@3.12"].opt_bin/"python3"
-    site_packages = Language::Python.site_packages(python3)
-    ENV.prepend_path "PYTHONPATH", prefix/site_packages
-    system python3, "-m", "pip", "install", "--target=#{prefix/site_packages}", "."
+    virtualenv_install_with_resources
   end
 
   test do
