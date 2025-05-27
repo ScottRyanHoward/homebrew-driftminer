@@ -8,12 +8,7 @@ class Driftminer < Formula
   depends_on "python@3.12"
 
   def install
-    ENV["PYTHONPATH"] = libexec/"lib/python3.12/site-packages"
-    system Formula["python@3.12"].opt_bin/"python3", "-m", "ensurepip"
-    system Formula["python@3.12"].opt_bin/"python3", "-m", "pip", "install", "--upgrade", "pip"
-    system Formula["python@3.12"].opt_bin/"python3", "-m", "pip", "install", ".", "--target=#{libexec}/lib/python3.12/site-packages"
-    bin.install Dir[libexec/"bin/*"]
-    bin.env_script_all_files(libexec/"bin", PYTHONPATH: ENV["PYTHONPATH"])
+    system Formula["python@3.12"].bin/"pip3", "install", "."
   end
 
   test do
