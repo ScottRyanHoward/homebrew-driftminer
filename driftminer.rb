@@ -8,8 +8,8 @@ class Driftminer < Formula
   depends_on "python@3.12"
 
   resource "virtualenv" do
-    url "https://files.pythonhosted.org/packages/d6/45/cf2c3c08348a6bd6a2b7f3c1347f0d40f36df0f2f7980dd9c3a27b9dc4c6/virtualenv-20.25.0.tar.gz"
-    sha256 "bf51c0d9c7dd63ea8e44086fa1e4fb1093a31e963b86959257378aef020e1f1b"
+    url "https://files.pythonhosted.org/packages/0b/84/f44ceb8d98d7c5a14b9cfe7069f9d30dcbee2b7b8ea2eebd3430c573a1b8/virtualenv-20.24.7.tar.gz"
+    sha256 "69050ffb42419c91f6c1284a7b24e0475d793447e35929b488bf6a0aade39353"
   end
 
   def install
