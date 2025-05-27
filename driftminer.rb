@@ -8,15 +8,14 @@ class Driftminer < Formula
   depends_on "python@3.12"
 
   def install
-    venv = libexec/"venv"
-    ENV["VIRTUAL_ENV"] = venv
-    ENV.delete "PYTHONPATH"
+    python = Formula["python@3.12"].opt_bin/"python3"
+    site_packages = prefix/"lib/python3.12/site-packages"
+    site_packages.mkpath
 
-    system Formula["python@3.12"].bin/"python3", "-m", "venv", venv
-    ENV["PATH"] = "#{venv}/bin:#{ENV["PATH"]}"
+    ENV["PYTHONPATH"] = site_packages
+    system python, "setup.py", "install", "--prefix=#{prefix}"
 
-    system "#{venv}/bin/pip", "install", "."
-    system "#{venv}/bin/pip", "freeze", ">", "requirements.txt"
+    bin.install_symlink Dir["#{prefix}/bin/*"]
   end
 
   test do
