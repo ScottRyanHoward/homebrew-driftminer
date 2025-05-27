@@ -10,6 +10,9 @@ class Driftminer < Formula
   depends_on "python@3.12"
 
   def install
+    # Install pip first
+    system "/opt/homebrew/opt/python@3.12/bin/python3.12", "-m", "ensurepip"
+    system "/opt/homebrew/opt/python@3.12/bin/python3.12", "-m", "pip", "install", "--upgrade", "pip"
     virtualenv_install_with_resources
   end
 
