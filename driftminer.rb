@@ -11,12 +11,11 @@ class Driftminer < Formula
     python = Formula["python@3.12"].opt_bin/"python3"
     venv = libexec
 
-    # Create virtualenv
-    system python, "-m", "pip", "install", "virtualenv"
-    system python, "-m", "virtualenv", "#{venv}"
+    # Create venv
+    system python, "-m", "venv", "#{venv}"
     venv_python = venv/"bin/python"
 
-    # Install driftminer in virtualenv
+    # Install driftminer
     system venv_python, "-m", "pip", "install", "."
 
     # Create symlinks
