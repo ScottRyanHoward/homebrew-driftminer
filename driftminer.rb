@@ -9,8 +9,10 @@ class Driftminer < Formula
   depends_on "python@3.12"
 
   def install
-    system_command Formula["python@3.12"].bin/"pip3",
-      args: ["install", "--prefix=#{prefix}", "--no-deps", buildpath]
+    ENV.prepend_create_path "PYTHONPATH", libexec/"lib/python3.12/site-packages"
+    system Formula["python@3.12"].opt_bin/"python3", "-m", "pip", "install", "-v", ".", "--no-deps", "--ignore-installed", "--prefix=#{libexec}"
+    bin.install Dir[libexec/"bin/*"]
+    bin.env_script_all_files(libexec/"bin", PYTHONPATH: ENV["PYTHONPATH"])
   end
 
   test do
