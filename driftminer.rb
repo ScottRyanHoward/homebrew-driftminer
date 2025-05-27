@@ -13,7 +13,15 @@ class Driftminer < Formula
     site_packages.mkpath
 
     ENV["PYTHONPATH"] = "#{buildpath}:#{site_packages}"
-    system python, "-m", "pip", "install", "-e", ".", "--prefix=#{prefix}"
+    ENV["PIP_VERBOSE"] = "1"
+    
+    # Ensure setup.py exists
+    unless File.exist?("setup.py")
+      raise "setup.py not found in #{buildpath}"
+    end
+
+    # Install in development mode with pip
+    system python, "-m", "pip", "install", "-v", "-e", ".", "--prefix=#{prefix}"
 
     bin.install_symlink Dir["#{prefix}/bin/*"]
   end
