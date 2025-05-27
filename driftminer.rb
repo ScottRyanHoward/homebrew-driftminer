@@ -1,15 +1,18 @@
 class Driftminer < Formula
   desc "Drift Detection as Code"
   homepage "https://github.com/ScottRyanHoward/driftminer"
-  url "https://github.com/ScottRyanHoward/driftminer/archive/refs/tags/v0.1.2.tar.gz"
-  sha256 "d55da981c65acc102eb9f3de4a675ff07a0216305e5d50bd3504059b58a63236"
-  license "MIT"
-  head "https://github.com/ScottRyanHoward/driftminer.git", branch: "main"
+  version "0.1.2"
 
-  depends_on "go" => :build
+  if Hardware::CPU.intel?
+    url "https://github.com/ScottRyanHoward/driftminer/releases/download/v0.1.2/driftminer_0.1.2_darwin_amd64.tar.gz"
+    sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+  else
+    url "https://github.com/ScottRyanHoward/driftminer/releases/download/v0.1.2/driftminer_0.1.2_darwin_arm64.tar.gz"
+    sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+  end
 
   def install
-    system "go", "build", *std_go_args(ldflags: "-s -w"), "./main.go"
+    bin.install "driftminer"
   end
 
   test do
