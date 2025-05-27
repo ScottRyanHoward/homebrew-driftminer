@@ -9,15 +9,16 @@ class Driftminer < Formula
 
   def install
     python = Formula["python@3.12"].opt_bin/"python3"
-    site_packages = prefix/"lib/python3.12/site-packages"
-    site_packages.mkpath
+    ENV["PYTHONPATH"] = lib/"python3.12/site-packages"
 
-    ENV["PYTHONPATH"] = site_packages
-    
-    # Install directly with pip
-    system python, "-m", "pip", "install", ".", "--prefix=#{prefix}", "--no-deps"
+    resources.each do |r|
+      r.stage do
+        system python, "-m", "pip", "install", ".", "--target=#{lib}/python3.12/site-packages"
+      end
+    end
 
-    bin.install_symlink Dir["#{prefix}/bin/*"]
+    system python, "-m", "pip", "install", ".", "--target=#{lib}/python3.12/site-packages"
+    bin.install_symlink Dir["#{lib}/python3.12/site-packages/bin/*"]
   end
 
   test do
