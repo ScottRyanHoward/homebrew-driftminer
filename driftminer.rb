@@ -6,16 +6,10 @@ class Driftminer < Formula
   version "0.1.5"
 
   def install
-    ohai "Current directory contents:"
-    system "ls", "-l"
-    ohai "Binary file type:"
-    system "file", "driftminer"
-    
-    # Install the binary directly
-    bin.install "driftminer"
-    
-    ohai "Installed binary file type:"
-    system "file", bin/"driftminer"
+    # Extract the binary directly to the bin directory
+    system "tar", "xzf", cached_download, "-C", bin
+    # Set correct permissions
+    chmod 0555, bin/"driftminer"
   end
 
   test do
