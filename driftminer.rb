@@ -9,6 +9,10 @@ class Driftminer < Formula
 
   def install
     bin.install "driftminer"
+    
+    # Create a wrapper script that sets up the correct Python path
+    (bin/"driftminer").write_env_script bin/"driftminer",
+      PATH: "#{Formula["python@3.11"].opt_bin}:#{ENV["PATH"]}"
   end
 
   test do
