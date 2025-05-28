@@ -5,6 +5,8 @@ class Driftminer < Formula
   sha256 "e472bee2733f73ac2e87e665559f65b38f2715e382e941b1843353f7a32898e6"
   version "0.1.5"
 
+  depends_on "python@3.11"
+
   def install
     bin.install "driftminer"
   end
