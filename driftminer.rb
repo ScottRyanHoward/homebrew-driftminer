@@ -8,16 +8,15 @@ class Driftminer < Formula
   depends_on "python@3.11"
 
   def install
-    # Extract and verify the binary
-    binary_path = "driftminer"
-    ohai "Installing binary from #{binary_path}"
-    chmod 0755, binary_path
+    # Install the binary directly into libexec
+    libexec.install "driftminer"
     
-    # Install the binary directly without a wrapper
-    bin.install binary_path
-    
-    # Verify the installation
-    system bin/binary_path, "--version" if build.with? "test"
+    # Create a small shell script in bin that calls the binary
+    (bin/"driftminer").write <<~EOS
+      #!/bin/bash
+      exec "#{libexec}/driftminer" "$@"
+    EOS
+    chmod 0755, bin/"driftminer"
   end
 
   test do
