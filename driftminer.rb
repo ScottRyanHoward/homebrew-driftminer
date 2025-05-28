@@ -5,15 +5,19 @@ class Driftminer < Formula
   sha256 "e472bee2733f73ac2e87e665559f65b38f2715e382e941b1843353f7a32898e6"
   version "0.1.5"
 
-  keg_only :provided_by_macos
-
   def install
-    libexec.install "driftminer"
-    (bin/"driftminer").write <<~EOS
+    # Move binary to a temporary location
+    mv "driftminer", "driftminer.bin"
+    # Create a wrapper script
+    File.write "driftminer", <<~EOS
       #!/bin/bash
-      exec "#{libexec}/driftminer" "$@"
+      exec "#{prefix}/bin/driftminer.bin" "$@"
     EOS
-    chmod 0755, bin/"driftminer", libexec/"driftminer"
+    # Install both files
+    prefix.install "driftminer.bin"
+    bin.install "driftminer"
+    # Set permissions
+    chmod 0755, prefix/"driftminer.bin", bin/"driftminer"
   end
 
   test do
