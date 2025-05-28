@@ -6,10 +6,9 @@ class Driftminer < Formula
   version "0.1.5"
 
   def install
-    # Install the binary to libexec to prevent automatic wrapping
-    libexec.install "driftminer"
-    # Create a symlink in bin
-    bin.install_symlink libexec/"driftminer"
+    # Directly copy the binary to bin, preserving its executable permissions
+    chmod 0755, "driftminer"
+    cp "driftminer", bin/"driftminer"
   end
 
   test do
