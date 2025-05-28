@@ -6,18 +6,16 @@ class Driftminer < Formula
   version "0.1.5"
 
   def install
-    # Move binary to a temporary location
-    mv "driftminer", "driftminer.bin"
-    # Create a wrapper script
-    File.write "driftminer", <<~EOS
-      #!/bin/bash
-      exec "#{prefix}/bin/driftminer.bin" "$@"
-    EOS
-    # Install both files
-    prefix.install "driftminer.bin"
+    ohai "Current directory contents:"
+    system "ls", "-l"
+    ohai "Binary file type:"
+    system "file", "driftminer"
+    
+    # Install the binary directly
     bin.install "driftminer"
-    # Set permissions
-    chmod 0755, prefix/"driftminer.bin", bin/"driftminer"
+    
+    ohai "Installed binary file type:"
+    system "file", bin/"driftminer"
   end
 
   test do
