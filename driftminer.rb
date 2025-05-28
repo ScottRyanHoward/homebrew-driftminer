@@ -8,10 +8,13 @@ class Driftminer < Formula
   depends_on "python@3.11"
 
   def install
-    # Install the binary directly into libexec
-    libexec.install "driftminer"
+    # First move the binary to a safe location
+    mv buildpath/"driftminer", buildpath/"driftminer.bin"
     
-    # Create a small shell script in bin that calls the binary
+    # Install the binary to libexec
+    libexec.install buildpath/"driftminer.bin" => "driftminer"
+    
+    # Create a small shell script in bin
     (bin/"driftminer").write <<~EOS
       #!/bin/bash
       exec "#{libexec}/driftminer" "$@"
