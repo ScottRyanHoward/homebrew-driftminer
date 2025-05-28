@@ -8,10 +8,11 @@ class Driftminer < Formula
   depends_on "python@3.11"
 
   def install
-    bin.install "driftminer"
+    # First, install the binary with a temporary name
+    bin.install "driftminer" => "driftminer-bin"
     
-    # Create a wrapper script that sets up the correct Python path
-    (bin/"driftminer").write_env_script bin/"driftminer",
+    # Then create the wrapper script with the final name
+    (bin/"driftminer").write_env_script bin/"driftminer-bin",
       PATH: "#{Formula["python@3.11"].opt_bin}:#{ENV["PATH"]}"
   end
 
